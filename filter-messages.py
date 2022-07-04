@@ -17,7 +17,7 @@ filters = [i.strip() for i in open(path, "r").readlines()]
 def FilterMessage(word, word_eol, userdata):
     if not any(filter for filter in filters if filter in word_eol[0]) and "://" in word_eol[0]:
         url = [i for i in word_eol[0].split() if "://" in i][0]   
-        hexchat.prnt("You cannot send this message because URL {0}\nAdd url into the filter list {1}".format(url, path))
+        hexchat.prnt("You cannot send this message because URL {0}\nAdd the domain into the filter list {1}".format(url, path))
         #hexchat.command('SAY {}'.format("ok man, this is working!"))
         return hexchat.EAT_ALL
 
