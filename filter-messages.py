@@ -1,5 +1,4 @@
 #killown irc
-
 __module_name__ = "filter"
 __module_version__ = "1.0"
 __module_description__ = "Filter messages"
@@ -14,14 +13,11 @@ if not os.path.exists(path):
 
 filters = [i.strip() for i in open(path, "r").readlines()]
 
-# Called when you send a message
-def replace_url(word, word_eol, userdata):
-	# Skip replacement if string does not match
+def FilterMessage(word, word_eol, userdata):
     if not any(filter for filter in filters if filter in word_eol[0]) and "://" in word_eol[0]:
-        url = [i for i in word_eol[0].split() if "://" in i][0]
-        
-        hexchat.prnt('You cannot send this message because this URL {0} is not into the filter list'.format(url))
+        url = [i for i in word_eol[0].split() if "://" in i][0]   
+        hexchat.prnt("You cannot send this message because URL {0}\n Add url into the filter list {1}".format(url, path))
         #hexchat.command('SAY {}'.format("ok man, this is working!"))
         return hexchat.EAT_ALL
 
-hexchat.hook_command("", replace_url)
+hexchat.hook_command("", FilterMessage)
